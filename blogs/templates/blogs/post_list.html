@@ -1,0 +1,44 @@
+{% extends 'blogs/base.html' %}
+{% load static %}
+
+<!-- display the posts-->
+{% block content %}
+    {% for post in posts %}
+        
+    <article class ="post">
+        <div class = "subforum-row">
+            <!-- This is the profile picture-->
+                <div class = "subforum-column center">
+                    <i class = "fa fa-car center"></i>
+                    <img width="100" height="100" src = "{%static 'blogs/images/komi.jpg'%}"> 
+                </div>      
+        <!-- send user to the detail page when clicked-->
+        <div class = "subforum-description subforum-column center">
+            <a href = "{% url 'post_details' pk=post.pk %}" style = "color:white" class = 'removeline bigtext'> {{post.title}} </a>
+        </div>
+        <!-- allow user to edit/delete post only if they are the creator-->
+        {%if user.is_authenticated%}
+            {% if user.id == blog.author.id %}
+                <div class="subforum-stats subforum-column center" style = "color:blue">
+                    <a href="{% url 'post_edit' pk=post.pk %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                        </svg>
+                    </a>
+                </div>
+            {% else %}
+            <!-- let them know they have no rights here-->
+                <div class="subforum-stats subforum-column center" style = "color:white">
+                   <small> You are not authorized to edit or delete this forum. </small>
+                </div>
+            {% endif %}
+        {% endif %}
+        <!-- show the time posted/ who made the post-->
+        <div class = "subforum-info subforum-column">
+            <b style = "color:white"> Last Posted by </b> <a style = "color:white"> {{post.author}}</a>
+            <br> <b style = "color:white"> on </b> <small> <time class = "time" style = "color:white"> {{post.published_date}} <time> </small>
+        </div>
+        </div>
+    </article>
+    {% endfor %}
+{% endblock %}

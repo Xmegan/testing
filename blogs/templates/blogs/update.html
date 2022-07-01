@@ -1,0 +1,13 @@
+<a href="{% url 'post_list' %}">Click to go back home</a>
+<br>
+<a href="{% url 'search' %}">Click to go back to Search</a>
+<br>
+<a href="{% url 'ordering' %}">Click to go back to Newest-Oldest</a>
+<br>
+<a href="{% url 'todayDate' %}">Click to go back Oldest-Newest</a>
+
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="update post">
+    <a href="{% url 'delete' post.id %}">delete</a>
+</form>

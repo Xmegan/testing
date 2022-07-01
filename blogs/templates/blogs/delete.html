@@ -1,0 +1,27 @@
+{% extends 'blogs/base.html' %}
+
+{% block content %}    
+<form method="post">{% csrf_token %}
+<article class = 'post'>
+    <aside class = "actions">
+        <div class="container p-5 my-5 bg-dark text-white">
+            <h3 style="color: red;">Are you sure you want to delete the post <h3>
+                <br>
+                <br>
+                <p class="editdeletetext" style="color:grey" >
+                <u> Title: {{object.title}}</u>
+                <br>
+                <br>
+                Text: {{ object.text }}?
+                </p>
+            <br>
+            <!-- button to delete post-->
+            <button class = "button button1" > <input type="submit" value="Confirm"> </button>
+            <br>
+            <!-- take user back to home screen if they do not want to delete post-->
+            <h4><a href="{% url 'post_list' %}">No, I do not want to delete the post</a></h4>
+            </div>
+        </aside>
+    </article>
+</form>
+{% endblock %}

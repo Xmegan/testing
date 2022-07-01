@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+<!-- Latest compiled and minified CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> 
+    <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{% static 'blogs/blogs.css' %}">
+  
+</head>
+<!-- Nav Bar -->
+<body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+        <div class="container-fluid">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" href = "{% url 'post_list' %}">{% csrf_token %}808 Bangaz</a>
+            </li>
+            <li class="nav-item">
+            <li class="nav-item">
+                <a class="nav-link" href= "{% url 'about' %}">{% csrf_token %}About Us</a>
+            </li>
+              <a class="nav-link" href=" {% url 'register' %}"> Create an Account </a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href=" {% url 'logout' %}"> Logout </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'post_new' %}">Make a Post</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href=" {% url 'login' %}"> Login </a>
+            </li>
+            {% endif %}
+            <li class = "nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Ordering</a>
+                    <ul class="dropdown-menu">
+                        <li><a class = "dropdown-item" href = " {% url 'ordering' %}"> Newest to Oldest</a></li>
+                        <li><a class = "dropdown-item" href = " {% url 'todayDate' %}"> Oldest to Newest</a></li>
+                    </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href=" {% url 'contact' %}"> Contact Us </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" text-align: "right"; href="{% url 'search' %}">Search</a>
+            </ul>
+            {% if user.is_authenticated%}
+                <ul class = 'navbar-nav ml-auto'>
+                    <li class = "nav-item">
+                        <a class="nav-link" href="#">  Welcome back {{user.username}}! </a>
+                    </li>
+                <ul>
+            {% endif %}
+        </div>
+      </nav>
+    </body>
+    <br>
+    <br>
+    <br>
+    <!-- Display posts from oldest to newest-->
+    {% if blogs_list %}        
+        {% for blog in blogs_list %}       
+        <article class ="post">
+            <div class = "subforum-row">
+                <!-- This is the profile picture-->
+                    <div class = "subforum-column center">
+                        <i class = "fa fa-car center"></i>
+                        <img width="100" height="100" src = "{%static 'blogs/images/komi.jpg'%}"> 
+                    </div>      
+            <!-- send user to the detail page when clicked-->
+            <div class = "subforum-description subforum-column center">
+                <a href = "{% url 'post_details' pk=blog.pk %}" style = "color:white" class = 'removeline bigtext'> {{blog.title}} </a>
+            </div>
+            <!-- allow user to edit/delete post only if they are the creator-->
+            {%if user.is_authenticated%}
+                {% if user.id == blog.author.id %}
+                    <div class="subforum-stats subforum-column center" style = "color:blue">
+                        <a href="{% url 'post_edit' pk=blog.pk %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                            </svg>
+                        </a>
+                    </div>
+                {% else %}
+                <!-- let them know they have no rights here-->
+                    <div class="subforum-stats subforum-column center" style = "color:white">
+                       <small> You are not authorized to edit or delete this forum. </small>
+                    </div>
+                {% endif %}
+            {% endif %}
+            <!-- show the time posted/ who made the post-->
+            <div class = "subforum-info subforum-column">
+                <b style = "color:white"> Last Posted by </b> <a style = "color:white"> {{blog.author}}</a>
+                <br> <b style = "color:white"> on </b> <small> <time class = "time" style = "color:white"> {{blog.published_date}} <time> </small>
+            </div>
+        </div>
+        </article>
+        {% endfor %}
+    {% else %}
+        <p>No blogs posted.</p>
+    {% endif %}
+    <br>
+    </body>
+</html>
+

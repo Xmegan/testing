@@ -1,0 +1,34 @@
+{% extends 'blogs/base.html' %}
+
+{% block content %}
+        <article class="post">
+            <aside class="actions">
+                <div class="container p-5 my-5 bg-dark text-white">
+                    <h2>{{ post.title }}</h2>
+                    <small style="color: white;"> Author: {{ post.author }}</small> <br>
+                    <time class = 'date'>
+                        <small style = "color: white"> Date: {{post.published_date}} </small>
+                    </time>
+                    <br>
+                    <br>
+                    <br>
+                    <p>{{ post.text }}</p>
+                    <br>
+                    <!-- Allow the user to do things if they are logged in-->
+                    {% if user.is_authenticated%}
+                    <!-- if the user is the poster then they can edit/delete their own post-->
+                        {% if user.id == post.author.id%}
+                            <button class = "button button1"> <a class = "removeline" href="{% url 'post_edit' pk=post.pk %}">Edit Existing Post</a></button>
+                            <button class = "button button1"> <a class = "removeline" href="{% url 'delete' pk=post.pk %}">Delete Existing Post</a></button>
+                        {% endif%}
+                    {% endif %}    
+                    <br>
+                    <br>
+                    <!-- allow user to like / dislike the post -->
+                    <form action = "{% url 'like_post' post.pk %}" method = "POST"> {% csrf_token%} <button type = "submit", name"post_id" value = "{{post.id}}", class = "btn btn-primary btn-sm"> Like </button> <small style = "color:orange"> {{total_likes}} - likes </small> </form>                      
+                    <br>
+                    <form action = "{% url 'dislike_post' post.pk %}" method = "POST"> {% csrf_token%} <button type = "submit", name"post_id" value = "{{post.id}}", class = "btn btn-primary btn-sm"> Dislike </button> <small style = "color:orange"> {{total_dislikes}} - Dislikes </small> </form>
+            </aside>
+
+        </article>
+{% endblock %}

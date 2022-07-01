@@ -1,0 +1,5 @@
+Django~=3.2.10
+django-filter
+django-registration
+django-crispy-forms
+django-ses

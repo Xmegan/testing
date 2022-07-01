@@ -1,0 +1,131 @@
+ .page-header {
+    background-color: lightblue;
+    margin-top: 0;
+    margin-bottom: 50px;
+    padding: 10px 10px 10px 10px;
+    font-family: "Lucida Console", "Courier New", monospace;
+    text-align: left;
+}
+
+.top-menu {
+    color: #ffffff;
+    float: right;
+    font-size: 10pt;
+    margin-right: 2px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: Georgia, serif;
+}
+
+
+.title{
+    padding: 30px 20px 20px 40px;
+    color: lightseagreen;
+    font-style: bold;
+    font-family: 'Lobster', cursive;
+    font-size: 25pt;
+    
+}
+
+.greeting2{
+    color: white;
+    padding: 30px 20px 20px 30px;
+    font-style: italic;
+    font-family: 'Lobster', cursive;
+}
+
+.greeting3{
+    padding: 30px 20px 20px 30px;
+    color: white;
+    font-family: 'Lobster', cursive;
+} 
+
+
+.post-form textarea,
+.post-form input {
+    width: 100%;
+}
+
+.pencil{
+    color: mediumaquamarine;
+    font-size: small;
+    font-family:'Courier New', Courier, monospace;
+
+}
+
+.user{
+    text-align: center;
+    padding: 10px 10px 10px 10px;
+    color: gray;
+}
+
+/* NEW STUFF */
+
+.container{
+    margin: 20px;
+    padding: 20px;
+}
+
+.subforum{
+    margin-top:20px;
+}
+
+.subforum-title{
+    background-color:#292B2E;
+    padding: 5px;
+    border-radius: 5px;
+    margin:4px;
+}
+
+.subforum-row{
+    display: grid;
+    grid-template-columns: 7% 60% 13% 20%;
+}
+
+.subforum-column{
+    padding: 30px;
+    margin:5px;
+    border-radius: 5px;
+    background-color:#111314;
+}
+
+.subforum-description *{
+    margin-block: 0;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+}
+
+
+.subforum-devider{
+    display: none;   
+}
+
+.button1 {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.removeline {
+    text-decoration: none;
+    color: black
+}
+
+.bigtext {
+    font-size: 150%;
+    font-family: Georgia, serif;
+
+}
+
+body{
+    background-color: white;
+}
+
+.addimage{
+    background: url("images/komi.jpg") repeat;
+}
